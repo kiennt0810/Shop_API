@@ -15,24 +15,46 @@ namespace Shop_API.Context
         }
 
         private IStaffRepository _staffRepo;
-
         private IGroupRepository _groupRepo;
-
         private IGroupStaffRepository _groupStaffRepo;
-
         private IRoleRepository _roleRepo;
-
         private IFunctionRepository _functionRepo;
-
         private IColorRepository _colorRepo;
-
         private IStorageRepository _storageRepo;
-
         private IBrandRepository _brandRepo;
-
         private IProductRepository _productRepo;
+        private ICustomerRepository _customerRepo;
+        private IOrderDtlRepository _orderDtlRepo;
+        private IOrderHdrRepository _orderHdrRepo;
 
-        public IProductRepository ProRepo
+        public IOrderDtlRepository OrderDtlRepo
+        {
+            get
+            {
+                _orderDtlRepo ??= new OrderDtlRepository(_context);
+                return _orderDtlRepo;
+            }
+        }
+
+        public IOrderHdrRepository OrderHdrRepo
+        {
+            get
+            {
+                _orderHdrRepo ??= new OrderHdrRepository(_context);
+                return _orderHdrRepo;
+            }
+        }
+
+        public ICustomerRepository CustomerRepo
+        {
+            get 
+            {
+                _customerRepo ??= new CustomerRepository(_context);
+                return _customerRepo; 
+            }
+        }
+
+        public IProductRepository ProductRepo
         {
             get
             {
@@ -41,6 +63,7 @@ namespace Shop_API.Context
                 return _productRepo;
             }
         }
+
         public IBrandRepository BrandRepo
         {
             get
@@ -119,7 +142,6 @@ namespace Shop_API.Context
             }
         }
 
-        public IProductRepository ProductRepo => throw new NotImplementedException();
 
         public int SaveChanges()
         {

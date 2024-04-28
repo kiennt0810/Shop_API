@@ -17,6 +17,9 @@ namespace Shop_API.Context
         public DbSet<StorageCapacities>? StorageCapacities { get; set; }
         public DbSet<Brand>? Brands { get; set; }
         public DbSet<Product>? Products { get; set; }
+        public DbSet<Customer>? Customers { get; set; }
+        public DbSet<OrderHdr>? OrderHdrs { get; set; }
+        public DbSet<OrderDtl>? OrderDtls { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasDbFunction(typeof(ApplicationDbContext).GetMethod(nameof(CharEquals), new[] { typeof(string), typeof(string) }))

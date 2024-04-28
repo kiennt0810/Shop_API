@@ -10,7 +10,6 @@ namespace Shop_API.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ID { get; set; }
 
-        [StringLength(128)]
         [Column(Order = 1)]
         public int IdBrand { set; get; }
 
@@ -32,8 +31,10 @@ namespace Shop_API.Entities
         public string? TenSp {  get; set; }
         public string? SoLuong { get; set; }
         public string? GiaThanh {  get; set; }
-        public string? HinhAnh { get; set; }
         public string? MoTa {  get; set; }
+        public string? ThuongHieu { get; set; }
+        public string? MaMau { get; set; }
+        public string? DungLuong { get; set; }
         public string? CreatedBy { get; set; }
         public string? UpdatedBy { get; set; }
         public DateTime? CreatedDate { get; set; }

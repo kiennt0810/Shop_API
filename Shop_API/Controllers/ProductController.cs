@@ -1,13 +1,14 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using Microsoft.Identity.Client.Extensions.Msal;
 using Newtonsoft.Json;
 using Shop_API.Context;
 using Shop_API.Core;
 using Shop_API.Entities;
 using Shop_API.ViewModels;
 using System.Collections.Generic;
-
+using System.Drawing;
 namespace Shop_API.Controllers
 {
     [Route("api/[controller]")]
@@ -36,41 +37,88 @@ namespace Shop_API.Controllers
         public IActionResult Get(int id)
         {
             Product obj = _unitOfWork.ProductRepo.GetSingleOrDefault(s => s.ID == id);
-            return Ok(_mapper.Map < IEnumerable < ProductVM >>(obj));
+            return Ok(obj);
         }
         [HttpPost]
         public void Post([FromBody] ProductVM objVM)
         {
-            if (objVM.JsonColor != null)
+            if (objVM.IDColor != null)
             {
-                ColorVM colorObj = JsonConvert.DeserializeObject<ColorVM>(objVM.JsonColor);
-                if (colorObj != null)
+                Entities.Color color = _unitOfWork.ColorRepo.GetSingleOrDefault(s => s.Id == objVM.IDColor);
+                if (color != null)
                 {
-                    objVM.IDColor = colorObj.ID;
+                    objVM.MaMau = color.MaMau;
                 }
             }
 
-            if (objVM.JsonBrand != null)
+            if (objVM.IDBrand != null)
             {
-                BrandVM brandObj = JsonConvert.DeserializeObject<BrandVM>(objVM.JsonBrand);
+                Brand brandObj = _unitOfWork.BrandRepo.GetSingleOrDefault(s => s.Id == objVM.IDBrand);
                 if (brandObj != null)
                 {
-                    objVM.IDBrand = brandObj.ID;
+                    objVM.ThuongHieu = brandObj.ThuongHieu;
                 }
             }
 
-            if (objVM.JsonStorage != null)
+            if (objVM.IDStorage != null)
             {
-                StorageVM storageObj = JsonConvert.DeserializeObject<StorageVM>(objVM.JsonStorage);
+                StorageCapacities storageObj = _unitOfWork.StorageRepo.GetSingleOrDefault(s => s.Id == objVM.IDStorage);
                 if (storageObj != null)
                 {
-                    objVM.IDStorage = storageObj.Id;
+                    objVM.DungLuong = storageObj.DungLuong;
                 }
             }
 
             Product Ojb = _mapper.Map<Product>(objVM);
             _unitOfWork.ProductRepo.Add(Ojb);
             _unitOfWork.SaveChanges();
+        }
+
+        [HttpPut]
+        public void Put([FromBody] ProductVM objVM)
+        {
+            Product proObj = _unitOfWork.ProductRepo.GetSingleOrDefault(s => s.ID == objVM.ID);
+            if (proObj != null)
+            {
+                if (objVM.IDColor != null)
+                {
+                    Entities.Color color = _unitOfWork.ColorRepo.GetSingleOrDefault(s => s.Id == objVM.IDColor);
+                    if (color != null)
+                    {
+                        objVM.MaMau = color.MaMau;
+                    }
+                }
+
+                if (objVM.IDBrand != null)
+                {
+                    Brand brandObj = _unitOfWork.BrandRepo.GetSingleOrDefault(s => s.Id == objVM.IDBrand);
+                    if (brandObj != null)
+                    {
+                        objVM.ThuongHieu = brandObj.ThuongHieu;
+                    }
+                }
+
+                if (objVM.IDStorage != null)
+                {
+                    StorageCapacities storageObj = _unitOfWork.StorageRepo.GetSingleOrDefault(s => s.Id == objVM.IDStorage);
+                    if (storageObj != null)
+                    {
+                        objVM.DungLuong = storageObj.DungLuong;
+                    }
+                }
+                _unitOfWork.ProductRepo.Update(_mapper.Map<Product>(objVM));
+                _unitOfWork.SaveChanges();
+            }
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            Product product = _unitOfWork.ProductRepo.GetSingleOrDefault(s => s.ID == id);
+            if (product == null) return NotFound();
+            _unitOfWork.ProductRepo.Remove(product);
+            _unitOfWork.SaveChanges();
+            return Ok();
         }
     }
 }

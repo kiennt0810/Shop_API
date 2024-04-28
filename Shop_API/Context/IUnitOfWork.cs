@@ -17,6 +17,8 @@ namespace Shop_API.Context
         IStorageRepository StorageRepo { get; }
         IBrandRepository BrandRepo { get; }
         IProductRepository ProductRepo { get; }
-
+        ICustomerRepository CustomerRepo { get; }
+        IOrderHdrRepository OrderHdrRepo { get; }
+        IOrderDtlRepository OrderDtlRepo { get; }
     }
 }

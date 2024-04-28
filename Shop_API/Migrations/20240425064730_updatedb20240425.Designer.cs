@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Shop_API.Context;
 
@@ -11,9 +12,11 @@ using Shop_API.Context;
 namespace Shop_API.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240425064730_updatedb20240425")]
+    partial class updatedb20240425
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -88,47 +91,6 @@ namespace Shop_API.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Pro_Color");
-                });
-
-            modelBuilder.Entity("Shop_API.Entities.Customer", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
-
-                    b.Property<string>("DiaChi")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DienThoai")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool?>("GioiTinh")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("HoTen")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("MatKhau")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("NgaySinh")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool?>("TrangThai")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("UserName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("PRO_Customer");
                 });
 
             modelBuilder.Entity("Shop_API.Entities.Function", b =>
@@ -231,69 +193,6 @@ namespace Shop_API.Migrations
                     b.ToTable("SYS_GroupStaff");
                 });
 
-            modelBuilder.Entity("Shop_API.Entities.OrderDtl", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
-
-                    b.Property<int>("IdOrderHdr")
-                        .HasMaxLength(50)
-                        .HasColumnType("int")
-                        .HasColumnOrder(1);
-
-                    b.Property<int>("IdProduct")
-                        .HasColumnType("int")
-                        .HasColumnOrder(2);
-
-                    b.Property<string>("SoTien")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TenSp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("IdOrderHdr");
-
-                    b.HasIndex("IdProduct");
-
-                    b.ToTable("PRO_OrderDtl");
-                });
-
-            modelBuilder.Entity("Shop_API.Entities.OrderHdr", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
-
-                    b.Property<string>("HinhThuc")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("IdCustomer")
-                        .HasColumnType("int")
-                        .HasColumnOrder(1);
-
-                    b.Property<DateTime?>("NgayTao")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("TongTien")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TrangThai")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("IdCustomer");
-
-                    b.ToTable("PRO_OrderHdr");
-                });
-
             modelBuilder.Entity("Shop_API.Entities.Product", b =>
                 {
                     b.Property<int>("ID")
@@ -315,6 +214,7 @@ namespace Shop_API.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("IdBrand")
+                        .HasMaxLength(128)
                         .HasColumnType("int")
                         .HasColumnOrder(1);
 
@@ -508,36 +408,6 @@ namespace Shop_API.Migrations
                     b.Navigation("HTNhanVien");
 
                     b.Navigation("HTNhom");
-                });
-
-            modelBuilder.Entity("Shop_API.Entities.OrderDtl", b =>
-                {
-                    b.HasOne("Shop_API.Entities.OrderHdr", "PRO_OrderHdr")
-                        .WithMany()
-                        .HasForeignKey("IdOrderHdr")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Shop_API.Entities.Product", "PRO_Product")
-                        .WithMany()
-                        .HasForeignKey("IdProduct")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("PRO_OrderHdr");
-
-                    b.Navigation("PRO_Product");
-                });
-
-            modelBuilder.Entity("Shop_API.Entities.OrderHdr", b =>
-                {
-                    b.HasOne("Shop_API.Entities.Customer", "PRO_Customer")
-                        .WithMany()
-                        .HasForeignKey("IdCustomer")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("PRO_Customer");
                 });
 
             modelBuilder.Entity("Shop_API.Entities.Product", b =>
