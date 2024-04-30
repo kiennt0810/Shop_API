@@ -21,6 +21,8 @@ namespace Shop_API.Mapper
             CreateMap<ProductVM, Product>();
             CreateMap<Customer, CustomerVM>();
             CreateMap<CustomerVM, Customer>();
+            CreateMap<AdFile, AdFileVM>();
+            CreateMap<AdFileVM, AdFile>();
         }
 
         public class NullStringConverter : ITypeConverter<string, string>
