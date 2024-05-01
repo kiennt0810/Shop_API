@@ -19,5 +19,6 @@ namespace Shop_API.Entities
         public string? UpdatedBy { get; set; }
         public DateTime? CreatedDate { get; set; }
         public DateTime? UpdatedDate { get; set; }
+        public string? ImgUrl { get; set; }
     }
 }

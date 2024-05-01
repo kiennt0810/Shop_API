@@ -27,6 +27,16 @@ namespace Shop_API.Context
         private IOrderDtlRepository _orderDtlRepo;
         private IOrderHdrRepository _orderHdrRepo;
         private IAdFileRepository _adFileRepo;
+        private IProFileImgRepository _proFileImgRepo;
+
+        public IProFileImgRepository ProFileImgRepo
+        {
+            get
+            {
+                _proFileImgRepo ??= new ProFileImgRepository(_context);
+                return _proFileImgRepo;
+            }
+        }
 
         public IAdFileRepository AdFileRepo
         {

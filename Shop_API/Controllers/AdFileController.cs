@@ -36,7 +36,7 @@ namespace Shop_API.Controllers
             List<AdFile> lsFile = new List<AdFile>();
             foreach (IFormFile file in objVM.ListFile ?? Enumerable.Empty<IFormFile>())
             {
-                AdFile adImg = new AdFile()
+                AdFile adImg = new()
                 {
                     FileName = file.FileName,
                     ContentType = file.ContentType,

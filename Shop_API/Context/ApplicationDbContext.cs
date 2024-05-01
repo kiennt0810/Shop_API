@@ -21,6 +21,7 @@ namespace Shop_API.Context
         public DbSet<OrderHdr>? OrderHdrs { get; set; }
         public DbSet<OrderDtl>? OrderDtls { get; set; }
         public DbSet<AdFile>? AdFiles { get; set; }
+        public DbSet<ProFileImg>? ProFileImgs { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasDbFunction(typeof(ApplicationDbContext).GetMethod(nameof(CharEquals), new[] { typeof(string), typeof(string) }))

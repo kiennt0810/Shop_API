@@ -21,5 +21,6 @@ namespace Shop_API.Context
         IOrderHdrRepository OrderHdrRepo { get; }
         IOrderDtlRepository OrderDtlRepo { get; }
         IAdFileRepository AdFileRepo { get; }
+        IProFileImgRepository ProFileImgRepo { get; }
     }
 }

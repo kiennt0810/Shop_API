@@ -71,6 +71,19 @@ namespace Shop_API.Controllers
 
             Product Ojb = _mapper.Map<Product>(objVM);
             _unitOfWork.ProductRepo.Add(Ojb);
+
+            List<ProFileImg> lsFile = [];
+            ProFileImg adImg = new()
+            {
+                IdProduct = (int)objVM.ID,
+                FileName = objVM.TenSp,
+            };
+
+            lsFile.Add(adImg);
+  
+            _unitOfWork.ProFileImgRepo.AddRange(lsFile);
+            _unitOfWork.SaveChanges();
+
             _unitOfWork.SaveChanges();
         }
 
