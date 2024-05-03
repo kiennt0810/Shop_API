@@ -37,10 +37,14 @@ namespace Shop_API.Controllers
         public IActionResult Get(int id)
         {
             Product obj = _unitOfWork.ProductRepo.GetSingleOrDefault(s => s.ID == id);
-            return Ok(obj);
+            ProductVM productVM = _mapper.Map<ProductVM>(obj);
+
+            IEnumerable<ProFileImg> lsFile = _unitOfWork.ProFileImgRepo.GetEntity().Where(p => p.IdProduct == id);
+            productVM.ListFile = (List<string>?)_mapper.Map<IEnumerable<ProFileImgVM>>(lsFile);
+            return Ok(productVM);
         }
         [HttpPost]
-        public void Post([FromBody] ProductVM objVM)
+        public void Post([FromForm] ProductVM objVM)
         {
             if (objVM.IDColor != null)
             {
@@ -72,23 +76,22 @@ namespace Shop_API.Controllers
             Product Ojb = _mapper.Map<Product>(objVM);
             _unitOfWork.ProductRepo.Add(Ojb);
 
-            List<ProFileImg> lsFile = [];
-            ProFileImg adImg = new()
+            List<ProFileImg> lsFile = new List<ProFileImg>();
+            foreach (string imgUrl in objVM.ListFile ?? Enumerable.Empty<string>())
             {
-                IdProduct = (int)objVM.ID,
-                FileName = objVM.TenSp,
-            };
-
-            lsFile.Add(adImg);
-  
+                ProFileImg adImg = new()
+                {
+                    IdProduct = (int)objVM.ID,
+                    ImgUrl = imgUrl,
+                };
+                lsFile.Add(adImg);
+            }
             _unitOfWork.ProFileImgRepo.AddRange(lsFile);
-            _unitOfWork.SaveChanges();
-
             _unitOfWork.SaveChanges();
         }
 
         [HttpPut]
-        public void Put([FromBody] ProductVM objVM)
+        public void Put([FromForm] ProductVM objVM)
         {
             Product proObj = _unitOfWork.ProductRepo.GetSingleOrDefault(s => s.ID == objVM.ID);
             if (proObj != null)
@@ -120,6 +123,17 @@ namespace Shop_API.Controllers
                     }
                 }
                 _unitOfWork.ProductRepo.Update(_mapper.Map<Product>(objVM));
+                List<ProFileImg> lsFile = new List<ProFileImg>();
+                foreach (string imgUrl in objVM.ListFile ?? Enumerable.Empty<string>())
+                {
+                    ProFileImg adImg = new()
+                    {
+                        IdProduct = (int)objVM.ID,
+                        ImgUrl = imgUrl,
+                    };
+                    lsFile.Add(adImg);
+                }
+                _unitOfWork.ProFileImgRepo.AddRange(lsFile);
                 _unitOfWork.SaveChanges();
             }
         }

@@ -34,19 +34,12 @@ namespace Shop_API.Controllers
         public void Post([FromForm] AdFileVM objVM)
         {
             List<AdFile> lsFile = new List<AdFile>();
-            foreach (IFormFile file in objVM.ListFile ?? Enumerable.Empty<IFormFile>())
+            foreach (string imgUrl in objVM.ListFile ?? Enumerable.Empty<string>())
             {
                 AdFile adImg = new()
                 {
-                    FileName = file.FileName,
-                    ContentType = file.ContentType,
+                    Url = imgUrl,
                 };
-
-                using (var stream = new MemoryStream())
-                {
-                    file.CopyTo(stream);
-                    adImg.Data = stream.ToArray();
-                }
                 lsFile.Add(adImg);
             }
             _unitOfWork.AdFileRepo.AddRange(lsFile);

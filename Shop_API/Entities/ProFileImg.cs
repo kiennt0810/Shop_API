@@ -16,10 +16,6 @@ namespace Shop_API.Entities
 
         [ForeignKey("IdProduct")]
         public virtual Product PRO_Product { set; get; }
-        public string? FileName { get; set; }
         public string? ImgUrl { get; set; }
-        public byte[]? Data { get; set; }
-        [StringLength(50)]
-        public String? ContentType { set; get; }
     }
 }
