@@ -81,9 +81,15 @@ namespace Shop_API.Controllers
                     objVM.DungLuong = storageObj.DungLuong;
                 }
             }
-
-            Product Ojb = _mapper.Map<Product>(objVM);
-            _unitOfWork.ProductRepo.Add(Ojb);
+            Product Ojb = new Product();
+            foreach (string listObj in objVM.ListFile ?? Enumerable.Empty<string>())
+            {
+                Ojb = _mapper.Map<Product>(objVM);
+                Ojb.ImgUrlHdr = listObj;
+                _unitOfWork.ProductRepo.Add(Ojb);
+                break;
+            }
+               
             _unitOfWork.SaveChanges();
 
             List<ProFileImg> lsFile = new List<ProFileImg>();
