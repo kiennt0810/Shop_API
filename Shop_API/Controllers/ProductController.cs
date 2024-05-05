@@ -141,16 +141,19 @@ namespace Shop_API.Controllers
                 _unitOfWork.ProductRepo.Update(_mapper.Map<Product>(objVM));
 
                 List<ProFileImg> lsFile = new List<ProFileImg>();
-                foreach (string listObj in objVM.ListFile ?? Enumerable.Empty<string>())
+                if (objVM.ListFile != null)
                 {
-                    ProFileImg adImg = new()
+                    foreach (string listObj in objVM.ListFile ?? Enumerable.Empty<string>())
                     {
-                        ImgUrl = listObj,
-                        IdProduct = proObj.ID,
-                    };
-                    lsFile.Add(adImg);
+                        ProFileImg adImg = new()
+                        {
+                            ImgUrl = listObj,
+                            IdProduct = proObj.ID,
+                        };
+                        lsFile.Add(adImg);
+                    }
+                    _unitOfWork.ProFileImgRepo.AddRange(lsFile);
                 }
-                _unitOfWork.ProFileImgRepo.AddRange(lsFile);
                 _unitOfWork.SaveChanges();
             }
         }

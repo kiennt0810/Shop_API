@@ -18,6 +18,7 @@ namespace Shop_API.ViewModels
         public string? DungLuong { get; set; }
         public string? CreatedBy { get; set; }
         public string? UpdatedBy { get; set; }
+        public string? ImgUrlHdr { get; set; }
         public DateTime? CreatedDate { get; set; }
         public DateTime? UpdatedDate { get; set; }
         public List<string>? ListFile { get; set; }
