@@ -39,7 +39,7 @@ namespace Shop_API.Controllers
                 IEnumerable<ProFileImg> lsFile = _unitOfWork.ProFileImgRepo.GetEntity().Where(p => p.IdProduct == product.ID);
                 productVM.ListProFile = _mapper.Map<List<ProFileImg>>(lsFile);
             }
-            return Ok(productVM);
+            return Ok(products);
         }
 
         [HttpGet("{id}")]
