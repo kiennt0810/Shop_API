@@ -31,7 +31,15 @@ namespace Shop_API.Controllers
         public IActionResult Get()
         {
             var products = _unitOfWork.ProductRepo.GetAll().OrderBy((nv => nv.ID));
-            return Ok(_mapper.Map<IEnumerable<ProductVM>>(products));
+            ProductVM productVM = new();
+
+            foreach (var product in products)
+            {
+                productVM = _mapper.Map<ProductVM>(product);
+                IEnumerable<ProFileImg> lsFile = _unitOfWork.ProFileImgRepo.GetEntity().Where(p => p.IdProduct == product.ID);
+                productVM.ListProFile = _mapper.Map<List<ProFileImg>>(lsFile);
+            }
+            return Ok(productVM);
         }
 
         [HttpGet("{id}")]
