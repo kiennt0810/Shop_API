@@ -7,6 +7,7 @@ using Shop_API.Context;
 using Shop_API.Core;
 using Shop_API.Entities;
 using Shop_API.ViewModels;
+using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 namespace Shop_API.Controllers
@@ -40,7 +41,7 @@ namespace Shop_API.Controllers
             ProductVM productVM = _mapper.Map<ProductVM>(obj);
 
             IEnumerable<ProFileImg> lsFile = _unitOfWork.ProFileImgRepo.GetEntity().Where(p => p.IdProduct == id);
-            productVM.ListFile = (List<string>?)_mapper.Map<IEnumerable<ProFileImgVM>>(lsFile);
+            productVM.ListProFile = _mapper.Map<List<ProFileImg>>(lsFile);
             return Ok(productVM);
         }
         [HttpPost]
@@ -75,14 +76,15 @@ namespace Shop_API.Controllers
 
             Product Ojb = _mapper.Map<Product>(objVM);
             _unitOfWork.ProductRepo.Add(Ojb);
+            _unitOfWork.SaveChanges();
 
             List<ProFileImg> lsFile = new List<ProFileImg>();
-            foreach (string imgUrl in objVM.ListFile ?? Enumerable.Empty<string>())
+            foreach (string listObj in objVM.ListFile ?? Enumerable.Empty<string>())
             {
                 ProFileImg adImg = new()
-                {
-                    IdProduct = (int)objVM.ID,
-                    ImgUrl = imgUrl,
+                    {
+                        ImgUrl = listObj,
+                        IdProduct = Ojb.ID,
                 };
                 lsFile.Add(adImg);
             }
@@ -123,13 +125,14 @@ namespace Shop_API.Controllers
                     }
                 }
                 _unitOfWork.ProductRepo.Update(_mapper.Map<Product>(objVM));
+
                 List<ProFileImg> lsFile = new List<ProFileImg>();
-                foreach (string imgUrl in objVM.ListFile ?? Enumerable.Empty<string>())
+                foreach (string listObj in objVM.ListFile ?? Enumerable.Empty<string>())
                 {
                     ProFileImg adImg = new()
                     {
-                        IdProduct = (int)objVM.ID,
-                        ImgUrl = imgUrl,
+                        ImgUrl = listObj,
+                        IdProduct = proObj.ID,
                     };
                     lsFile.Add(adImg);
                 }
@@ -142,8 +145,14 @@ namespace Shop_API.Controllers
         public IActionResult Delete(int id)
         {
             Product product = _unitOfWork.ProductRepo.GetSingleOrDefault(s => s.ID == id);
+
+            IEnumerable<ProFileImg> listProFileImg = _unitOfWork.ProFileImgRepo.GetEntity().Where(p => p.IdProduct == id); ;
             if (product == null) return NotFound();
             _unitOfWork.ProductRepo.Remove(product);
+            foreach (var item in listProFileImg)
+            {
+                _unitOfWork.ProFileImgRepo.Remove(item);
+            }
             _unitOfWork.SaveChanges();
             return Ok();
         }

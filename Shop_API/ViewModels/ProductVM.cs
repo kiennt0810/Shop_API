@@ -21,5 +21,6 @@ namespace Shop_API.ViewModels
         public DateTime? CreatedDate { get; set; }
         public DateTime? UpdatedDate { get; set; }
         public List<string>? ListFile { get; set; }
+        public List<ProFileImg>? ListProFile { get; set; }
     }
 }
