@@ -128,7 +128,7 @@ namespace Shop_API.Context
             {
                 _groupRepo ??= new GroupRepository(_context);
 
-                return GroupRepo;
+                return _groupRepo;
             }
         }
         public IGroupStaffRepository GroupStaffRepo

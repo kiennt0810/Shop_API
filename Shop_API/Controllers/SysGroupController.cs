@@ -26,7 +26,7 @@ namespace Shop_API.Controllers
             try
             {
                 var groups = _unitOfWork.GroupRepo.GetAll().OrderBy((group => group.ID));
-                return Ok(_mapper.Map<GroupVM>(groups));
+                return Ok(_mapper.Map<IEnumerable<GroupVM>>(groups));
             } catch (Exception ex)
             {
                 Console.WriteLine(ex.ToString());

@@ -11,7 +11,7 @@ namespace Shop_API.Entities
         public string MaCN { set; get; }
 
         [StringLength(250)]
-        public string Ten { get; set; }
+        public string? Ten { get; set; }
 
         [StringLength(50)]
         public string? MaMenu { get; set; }
