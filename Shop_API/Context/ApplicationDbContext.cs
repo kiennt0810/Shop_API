@@ -9,10 +9,10 @@ namespace Shop_API.Context
         public ApplicationDbContext(DbContextOptions options) : base(options)
         { }
         public DbSet<Staff>? Staffs { get; set; }
-        public DbSet<Group>? Groups { get; set; }
+        public DbSet<SysGroup>? SysGroups { get; set; }
         public DbSet<GroupStaff>? GroupStaffs { get; set; }
         public DbSet<Role>? Roles { get; set; }
-        public DbSet<Function>? Functions { get; set; }
+        public DbSet<SysFunction>? SysFunctions { get; set; }
         public DbSet<Color>? Colors { get; set; }
         public DbSet<StorageCapacities>? StorageCapacities { get; set; }
         public DbSet<Brand>? Brands { get; set; }

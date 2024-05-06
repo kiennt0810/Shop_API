@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Shop_API.Entities
 {
     [Table("SYS_Function")]
-    public class Function
+    public class SysFunction
     {
         [StringLength(50)]
         [Key]

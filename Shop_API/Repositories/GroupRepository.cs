@@ -5,7 +5,7 @@ using Shop_API.Repositories.Interface;
 
 namespace Shop_API.Repositories
 {
-    public class GroupRepository : Repository<Group>, IGroupRepository
+    public class GroupRepository : Repository<SysGroup>, IGroupRepository
     {
         public GroupRepository(DbContext context) : base(context)
         { }

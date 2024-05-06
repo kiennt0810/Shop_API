@@ -25,6 +25,17 @@ namespace Shop_API.Mapper
             CreateMap<AdFileVM, AdFile>();
             CreateMap<ProFileImg, ProFileImgVM>();
             CreateMap<ProFileImgVM, ProFileImg>();
+            CreateMap<FunctionVM, SysFunction>();
+            CreateMap<SysFunction, FunctionVM>();
+
+            CreateMap<SysGroup, GroupVM>();
+            CreateMap<GroupVM, SysGroup>();
+
+            CreateMap<GroupStaff, GroupStaffVM>();
+            CreateMap<GroupStaffVM, GroupStaff>();
+
+            CreateMap<Role, RoleVM>();
+            CreateMap<RoleVM, Role>();
         }
 
         public class NullStringConverter : ITypeConverter<string, string>

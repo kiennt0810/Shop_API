@@ -5,7 +5,7 @@ using Shop_API.Repositories.Interface;
 
 namespace Shop_API.Repositories
 {
-    public class FunctionRepository : Repository<Function>, IFunctionRepository
+    public class FunctionRepository : Repository<SysFunction>, IFunctionRepository
     {
         public FunctionRepository(DbContext context) : base(context)
         { }

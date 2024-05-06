@@ -17,10 +17,10 @@ namespace Shop_API.Entities
         public string IdCn { set; get; }
 
         [ForeignKey("IdCn")]
-        public virtual Function HTChucNang { set; get; }
+        public virtual SysFunction HTChucNang { set; get; }
 
         [ForeignKey("IdNhom")]
-        public virtual Group HTNhom { set; get; }
+        public virtual SysGroup HTNhom { set; get; }
 
         public string? CreatedBy { get; set; }
         public string? UpdatedBy { get; set; }

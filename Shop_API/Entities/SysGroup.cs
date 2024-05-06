@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 namespace Shop_API.Entities
 {
     [Table("SYS_Group")]
-    public class Group
+    public class SysGroup
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

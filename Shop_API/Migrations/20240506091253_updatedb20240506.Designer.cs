@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Shop_API.Context;
 
@@ -11,9 +12,11 @@ using Shop_API.Context;
 namespace Shop_API.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240506091253_updatedb20240506")]
+    partial class updatedb20240506
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -148,6 +151,68 @@ namespace Shop_API.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("PRO_Customer");
+                });
+
+            modelBuilder.Entity("Shop_API.Entities.Function", b =>
+                {
+                    b.Property<string>("MaCN")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("MaMenu")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Ten")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.Property<string>("TrangThai")
+                        .HasMaxLength(2)
+                        .HasColumnType("nvarchar(2)");
+
+                    b.HasKey("MaCN");
+
+                    b.ToTable("SYS_Function");
+                });
+
+            modelBuilder.Entity("Shop_API.Entities.Group", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("MaNhom")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Ten")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.Property<bool?>("TinhTrang")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("SYS_Group");
                 });
 
             modelBuilder.Entity("Shop_API.Entities.GroupStaff", b =>
@@ -474,68 +539,6 @@ namespace Shop_API.Migrations
                     b.ToTable("Pro_Storage");
                 });
 
-            modelBuilder.Entity("Shop_API.Entities.SysFunction", b =>
-                {
-                    b.Property<string>("MaCN")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("MaMenu")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("Ten")
-                        .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
-
-                    b.Property<string>("TrangThai")
-                        .HasMaxLength(2)
-                        .HasColumnType("nvarchar(2)");
-
-                    b.HasKey("MaCN");
-
-                    b.ToTable("SYS_Function");
-                });
-
-            modelBuilder.Entity("Shop_API.Entities.SysGroup", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("MaNhom")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("Ten")
-                        .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
-
-                    b.Property<bool?>("TinhTrang")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("UpdatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("SYS_Group");
-                });
-
             modelBuilder.Entity("Shop_API.Entities.GroupStaff", b =>
                 {
                     b.HasOne("Shop_API.Entities.Staff", "HTNhanVien")
@@ -544,7 +547,7 @@ namespace Shop_API.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Shop_API.Entities.SysGroup", "HTNhom")
+                    b.HasOne("Shop_API.Entities.Group", "HTNhom")
                         .WithMany()
                         .HasForeignKey("IdNhom")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -625,13 +628,13 @@ namespace Shop_API.Migrations
 
             modelBuilder.Entity("Shop_API.Entities.Role", b =>
                 {
-                    b.HasOne("Shop_API.Entities.SysFunction", "HTChucNang")
+                    b.HasOne("Shop_API.Entities.Function", "HTChucNang")
                         .WithMany()
                         .HasForeignKey("IdCn")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Shop_API.Entities.SysGroup", "HTNhom")
+                    b.HasOne("Shop_API.Entities.Group", "HTNhom")
                         .WithMany()
                         .HasForeignKey("IdNhom")
                         .OnDelete(DeleteBehavior.Cascade)

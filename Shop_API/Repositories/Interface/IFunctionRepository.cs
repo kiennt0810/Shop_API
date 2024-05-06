@@ -2,7 +2,7 @@
 
 namespace Shop_API.Repositories.Interface
 {
-    public interface IFunctionRepository : IRepository<Function>
+    public interface IFunctionRepository : IRepository<SysFunction>
     {
     }
 }
