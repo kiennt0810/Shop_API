@@ -7,17 +7,18 @@ namespace Shop_API.ViewModels
 {
     public class StaffVM
     {
-        public int ID { set; get; }
-        public string MaNhanVien { set; get; }
+        public int? ID { set; get; }
+        public string? MaNhanVien { set; get; }
+        public string? MatKhauMoi { set; get; }
 
-        public string MatKhau { set; get; }
+        public string? MatKhau { set; get; }
 
         public string? ChucDanh { get; set; }
 
-        public string HoTen { get; set; }
+        public string? HoTen { get; set; }
 
         public string? Email { get; set; }
-        public DateTime? NgaySinh { get; set; }
+        public string? NgaySinh { get; set; }
         public bool? GioiTinh { get; set; }
 
         public int? CountLoginFail { get; set; }

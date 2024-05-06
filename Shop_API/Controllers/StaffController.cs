@@ -30,16 +30,92 @@ namespace Shop_API.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            var htnhanviens = _unitOfWork.StaffRepo.GetAll().OrderBy((nv => nv.MaNhanVien));
-            return Ok(_mapper.Map<IEnumerable<StaffVM>>(htnhanviens));
+            var staffs = _unitOfWork.StaffRepo.GetAll().OrderBy((nv => nv.MaNhanVien));
+            return Ok(_mapper.Map<IEnumerable<StaffVM>>(staffs));
         }
 
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
-            Staff htnhanvien = _unitOfWork.StaffRepo.GetSingleOrDefault(s => s.ID == id);
-            return Ok(htnhanvien);
+            Staff staff = _unitOfWork.StaffRepo.GetSingleOrDefault(s => s.ID == id);
+            return Ok(staff);
 
+        }
+
+        [HttpGet("GetByMaNV/{maNV}")]
+        public IActionResult Get(String maNV)
+        {
+            Staff staff = _unitOfWork.StaffRepo.GetSingleOrDefault(s => s.MaNhanVien.ToLower() == maNV.ToLower());
+            return Ok(_mapper.Map<StaffVM>(staff));
+
+        }
+
+        [HttpPost]
+        public void Post([FromBody] StaffVM staffVM)
+        {
+            Staff staff = _mapper.Map<Staff>(staffVM);
+            staff.MatKhau = _sysParam.MatKhauMacDinh;
+            staff.CountLoginFail = 0;
+            _unitOfWork.StaffRepo.Add(staff);
+            _unitOfWork.SaveChanges();
+        }
+
+        [HttpPut]
+        public void Put([FromBody] StaffVM staffVM)
+        {
+            Staff objStaff = _unitOfWork.StaffRepo.GetSingleOrDefault(s => s.ID == staffVM.ID);
+            if (objStaff != null)
+            {
+                _unitOfWork.StaffRepo.Update(_mapper.Map<Staff>(staffVM));
+                _unitOfWork.SaveChanges();
+            }
+        }
+
+        [HttpDelete("{id}")]
+        public void Delete(int id)
+        {
+            Staff obj = _unitOfWork.StaffRepo.GetSingleOrDefault(s => s.ID == id);
+            if (obj != null)
+            {
+                _unitOfWork.StaffRepo.Remove(obj);
+                _unitOfWork.SaveChanges();
+            }
+        }
+
+        [HttpPost("ResetPwd")]
+        public async Task<IActionResult> ResetPwd([FromBody] StaffVM objVM)
+        {
+            Staff staff = _unitOfWork.StaffRepo.GetSingleOrDefault(s => s.MaNhanVien == objVM.MaNhanVien);
+            if (staff == null) return NotFound();
+            staff.MatKhau = _sysParam.MatKhauMacDinh;
+            staff.CountLoginFail = 0;
+            staff.TinhTrang = true;
+            _unitOfWork.StaffRepo.Update(staff);
+            _unitOfWork.SaveChanges();
+            return Ok();
+        }
+        [HttpPost("UpdatePwd")]
+        public async Task<IActionResult> UpdatePwd([FromBody] StaffVM objVM)
+        {
+            Staff staff = _unitOfWork.StaffRepo.GetSingleOrDefault(s => s.MaNhanVien == objVM.MaNhanVien && s.MatKhau == EncryptBase64(objVM.MatKhau));
+            if (staff == null) return NotFound();
+
+            staff.MatKhau = EncryptBase64(objVM.MatKhauMoi);
+            _unitOfWork.StaffRepo.Update(staff);
+            _unitOfWork.SaveChanges();
+            return Ok();
+        }
+
+        [HttpDelete("DeleteList/{ids}")]
+        public void DeleteList(String ids)
+        {
+            IEnumerable<String> lsIDs = ids.Split(',');
+            var lsStaff = _unitOfWork.StaffRepo.GetEntity().Where(t => lsIDs.Contains(t.ID.ToString()));
+            if (lsStaff != null)
+            {
+                _unitOfWork.StaffRepo.RemoveRange(lsStaff);
+                _unitOfWork.SaveChanges();
+            }
         }
 
         [HttpPost("Login")]

@@ -51,7 +51,7 @@ namespace Shop_API.Controllers
             StorageCapacities obj = _unitOfWork.StorageRepo.GetSingleOrDefault(s => s.Id == storageVM.Id);
             if (obj != null)
             {
-                _unitOfWork.StorageRepo.Update(_mapper.Map<StorageCapacities>(obj));
+                _unitOfWork.StorageRepo.Update(_mapper.Map<StorageCapacities>(storageVM));
                 _unitOfWork.SaveChanges();
             }
         }

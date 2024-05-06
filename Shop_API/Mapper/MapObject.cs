@@ -7,12 +7,18 @@ namespace Shop_API.Mapper
 {
     public class MapObject : Profile
     {
+        private String dtFmt = "dd/MM/yyyy";
+        private String dtYearFmt = "yyyy";
         public MapObject() {
             CreateMap<string, string>().ConvertUsing<NullStringConverter>();
             CreateMap<Color, ColorVM>();
             CreateMap<ColorVM, Color>();
-            CreateMap<Staff, StaffVM>();
-            CreateMap<StaffVM, Staff>();
+            CreateMap<Staff, StaffVM>().ForMember(
+                    x => x.NgaySinh, opt => opt.MapFrom(src => src.NgaySinh == null ? null : ((DateTime)src.NgaySinh).ToString(dtFmt, CultureInfo.InvariantCulture))
+                );
+            CreateMap<StaffVM, Staff>().ForMember(
+                    x => x.NgaySinh, opt => opt.MapFrom(src => parseDateTime(src.NgaySinh)
+                ));
             CreateMap<StorageCapacities, StorageVM>();
             CreateMap<StorageVM, StorageCapacities>();
             CreateMap<Brand, BrandVM>();
@@ -44,6 +50,12 @@ namespace Shop_API.Mapper
             {
                 return source ?? string.Empty;
             }
+        }
+
+        private DateTime? parseDateTime(String strDate)
+        {
+            return String.IsNullOrEmpty(strDate) ? null :
+                DateTime.ParseExact(strDate, dtFmt, CultureInfo.InvariantCulture);
         }
     }
 }
