@@ -38,7 +38,7 @@ namespace Shop_API.Controllers
         public IActionResult Get(int id)
         {
             Staff staff = _unitOfWork.StaffRepo.GetSingleOrDefault(s => s.ID == id);
-            return Ok(staff);
+            return Ok(_mapper.Map <StaffVM>(staff));
 
         }
 
