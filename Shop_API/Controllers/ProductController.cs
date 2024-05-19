@@ -31,27 +31,78 @@ namespace Shop_API.Controllers
         public IActionResult Get()
         {
             var products = _unitOfWork.ProductRepo.GetAll().OrderBy((nv => nv.ID));
-            ProductVM productVM = new();
+            var lsproductVM = _mapper.Map<IEnumerable<ProductVM>>(products);
 
-            foreach (var product in products)
+            foreach (var product in lsproductVM)
             {
-                productVM = _mapper.Map<ProductVM>(product);
                 IEnumerable<ProFileImg> lsFile = _unitOfWork.ProFileImgRepo.GetEntity().Where(p => p.IdProduct == product.ID);
-                productVM.ListProFile = _mapper.Map<List<ProFileImg>>(lsFile);
+                product.ListProFile = _mapper.Map<List<ProFileImg>>(lsFile);
             }
-            return Ok(products);
+            return Ok(lsproductVM);
+        }
+
+        [HttpGet("GetByTenSp/{TenSp}")]
+        public IActionResult Get(string TenSp)
+        {
+            var products = _unitOfWork.ProductRepo.GetEntity().Where(p => p.TenSp.Contains(TenSp));
+            if (products == null) 
+            {  
+                return BadRequest(); 
+            }
+            else
+            {
+                var lsproductVM = _mapper.Map<IEnumerable<ProductVM>>(products);
+
+                foreach (var product in lsproductVM)
+                {
+                    IEnumerable<ProFileImg> lsFile = _unitOfWork.ProFileImgRepo.GetEntity().Where(p => p.IdProduct == product.ID);
+                    product.ListProFile = _mapper.Map<List<ProFileImg>>(lsFile);
+                }
+                return Ok(lsproductVM);
+            }
+            
+        }
+
+        [HttpGet("GetByBrand/{ThuongHieu}")]
+        public IActionResult GetByIdBrand(int ThuongHieu)
+        {
+            var products = _unitOfWork.ProductRepo.GetEntity().Where(p => p.IdBrand == ThuongHieu);
+            var lsproductVM = _mapper.Map<IEnumerable<ProductVM>>(products);
+            if (products == null)
+            {
+                return NotFound();
+            } 
+            else
+            {
+                foreach (var product in lsproductVM)
+                {
+                    IEnumerable<ProFileImg> lsFile = _unitOfWork.ProFileImgRepo.GetEntity().Where(p => p.IdProduct == product.ID);
+                    product.ListProFile = _mapper.Map<List<ProFileImg>>(lsFile);
+                }
+                return Ok(lsproductVM);
+            }
+            
         }
 
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
             Product obj = _unitOfWork.ProductRepo.GetSingleOrDefault(s => s.ID == id);
-            ProductVM productVM = _mapper.Map<ProductVM>(obj);
-
-            IEnumerable<ProFileImg> lsFile = _unitOfWork.ProFileImgRepo.GetEntity().Where(p => p.IdProduct == id);
-            productVM.ListProFile = _mapper.Map<List<ProFileImg>>(lsFile);
-            return Ok(productVM);
+            if(obj == null)
+            {
+                return NotFound();
+            } 
+            else
+            {
+                ProductVM productVM = _mapper.Map<ProductVM>(obj);
+                IEnumerable<ProFileImg> lsFile = _unitOfWork.ProFileImgRepo.GetEntity().Where(p => p.IdProduct == id);
+                productVM.ListProFile = _mapper.Map<List<ProFileImg>>(lsFile);
+                return Ok(productVM);
+            }
+            
         }
+
+
         [HttpPost]
         public void Post([FromForm] ProductVM objVM)
         {
