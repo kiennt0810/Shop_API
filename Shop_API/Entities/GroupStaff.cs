@@ -18,10 +18,10 @@ namespace Shop_API.Entities
         public int IdNhom { set; get; }
 
         [ForeignKey("IdNhanVien")]
-        public virtual Staff HTNhanVien { set; get; }
+        public virtual Staff? HTNhanVien { set; get; }
 
         [ForeignKey("IdNhom")]
-        public virtual SysGroup HTNhom { set; get; }
+        public virtual SysGroup? HTNhom { set; get; }
 
         public string? CreatedBy { get; set; }
         public string? UpdatedBy { get; set; }

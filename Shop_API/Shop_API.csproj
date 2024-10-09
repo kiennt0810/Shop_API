@@ -5,6 +5,8 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <InvariantGlobalization>false</InvariantGlobalization>
+	<SelfContained>true</SelfContained>
+	<AllowUntrustedCertificate>true</AllowUntrustedCertificate>
   </PropertyGroup>
 
   <ItemGroup>

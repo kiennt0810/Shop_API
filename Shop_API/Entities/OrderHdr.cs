@@ -14,7 +14,7 @@ namespace Shop_API.Entities
         public int IdCustomer { set; get; }
 
         [ForeignKey("IdCustomer")]
-        public virtual Customer PRO_Customer { set; get; }
+        public virtual Customer? PRO_Customer { set; get; }
 
         public DateTime? NgayTao { set; get; }
         public string? TongTien { set; get; }

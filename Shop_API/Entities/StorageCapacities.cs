@@ -11,7 +11,7 @@ namespace Shop_API.Entities
         public int Id { set; get; }
 
         [StringLength(50)]
-        public string DungLuong { get; set; }
+        public string? DungLuong { get; set; }
 
         [StringLength(2)]
         public bool TrangThai { get; set; }

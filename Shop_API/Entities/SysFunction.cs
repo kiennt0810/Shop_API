@@ -8,7 +8,7 @@ namespace Shop_API.Entities
     {
         [StringLength(50)]
         [Key]
-        public string MaCN { set; get; }
+        public string? MaCN { set; get; }
 
         [StringLength(250)]
         public string? Ten { get; set; }

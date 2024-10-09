@@ -14,13 +14,13 @@ namespace Shop_API.Entities
 
         [Column(Order = 2)]
         [StringLength(50)]
-        public string IdCn { set; get; }
+        public string? IdCn { set; get; }
 
         [ForeignKey("IdCn")]
-        public virtual SysFunction HTChucNang { set; get; }
+        public virtual SysFunction? HTChucNang { set; get; }
 
         [ForeignKey("IdNhom")]
-        public virtual SysGroup HTNhom { set; get; }
+        public virtual SysGroup? HTNhom { set; get; }
 
         public string? CreatedBy { get; set; }
         public string? UpdatedBy { get; set; }

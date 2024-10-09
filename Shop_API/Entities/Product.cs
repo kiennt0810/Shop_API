@@ -20,13 +20,13 @@ namespace Shop_API.Entities
         public int IdStorage { set; get; }
 
         [ForeignKey("IdBrand")]
-        public virtual Brand Pro_Brand { set; get; }
+        public virtual Brand? Pro_Brand { set; get; }
 
         [ForeignKey("IdColor")]
-        public virtual Color Pro_Color { set; get; }
+        public virtual Color? Pro_Color { set; get; }
 
         [ForeignKey("IdStorage")]
-        public virtual StorageCapacities Pro_Storage { set; get; }
+        public virtual StorageCapacities? Pro_Storage { set; get; }
 
         public string? TenSp {  get; set; }
         public string? SoLuong { get; set; }

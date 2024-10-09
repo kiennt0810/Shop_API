@@ -12,16 +12,16 @@ namespace Shop_API.Entities
 
         [Required]
         [StringLength(50)]
-        public string MaNhanVien { set; get; }
+        public string? MaNhanVien { set; get; }
         [Required]
         [StringLength(50)]
-        public string MatKhau { set; get; }
+        public string? MatKhau { set; get; }
 
         [StringLength(200)]
         public string? ChucDanh { get; set; }
 
         [StringLength(300)]
-        public string HoTen { get; set; }
+        public string? HoTen { get; set; }
 
         [StringLength(200)]
         public string? Email { get; set; }

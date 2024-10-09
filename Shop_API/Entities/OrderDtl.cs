@@ -18,10 +18,10 @@ namespace Shop_API.Entities
         public int IdProduct { set; get; }
 
         [ForeignKey("IdOrderHdr")]
-        public virtual OrderHdr PRO_OrderHdr { set; get; }
+        public virtual OrderHdr? PRO_OrderHdr { set; get; }
 
         [ForeignKey("IdProduct")]
-        public virtual Product PRO_Product { set; get; }
+        public virtual Product? PRO_Product { set; get; }
 
         public string? TenSp { set; get; }
         public string? SoTien { set; get; }

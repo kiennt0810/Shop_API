@@ -15,7 +15,7 @@ namespace Shop_API.Entities
         public int IdProduct { set; get; }
 
         [ForeignKey("IdProduct")]
-        public virtual Product PRO_Product { set; get; }
+        public virtual Product? PRO_Product { set; get; }
         public string? ImgUrl { get; set; }
     }
 }

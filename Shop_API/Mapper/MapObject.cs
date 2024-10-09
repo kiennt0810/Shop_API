@@ -8,7 +8,7 @@ namespace Shop_API.Mapper
     public class MapObject : Profile
     {
         private String dtFmt = "dd/MM/yyyy";
-        private String dtYearFmt = "yyyy";
+        //private String dtYearFmt = "yyyy";
         public MapObject() {
             CreateMap<string, string>().ConvertUsing<NullStringConverter>();
             CreateMap<Color, ColorVM>();
